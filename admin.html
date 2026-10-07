@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hamza | Admin Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =========================================
+           BASIC ADMIN DASHBOARD
+        ========================================= */
+
+        body {
+            min-height: 100vh;
+            padding: 30px 16px;
+        }
+
+        .admin-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background: #111827;
+            border: 1px solid #263247;
+            border-radius: 16px;
+        }
+
+        .admin-container h1 {
+            margin-bottom: 10px;
+        }
+
+        .admin-form {
+            display: grid;
+            gap: 16px;
+            margin-top: 25px;
+        }
+
+        .admin-form label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+        }
+
+        .admin-form input,
+        .admin-form textarea {
+            width: 100%;
+            padding: 12px;
+            color: white;
+            background: #0b1220;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            font: inherit;
+            box-sizing: border-box;
+        }
+
+        .admin-form textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .admin-form button,
+        .admin-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+        }
+
+        .admin-form button {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .admin-button {
+            background: #374151;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .admin-status {
+            margin-top: 15px;
+            overflow-wrap: anywhere;
+        }
+
+        #dashboard {
+            display: none;
+        }
+
+        .admin-note {
+            color: #aab4c5;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           PROJECT EDITOR
+        ========================================= */
+
+        .projects-editor {
+            margin-top: 10px;
+        }
+
+        .project-editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .project-editor-header h3 {
+            margin: 0;
+        }
+
+        .add-project-button {
+            background: #2563eb !important;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .project-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .project-item {
+            background: #0b1220;
+            border: 1px solid #374151;
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .project-item h4 {
+            margin: 0 0 8px;
+            font-size: 18px;
+        }
+
+        .project-item p {
+            margin: 0 0 12px;
+            color: #aab4c5;
+            line-height: 1.6;
+        }
+
+        .project-url-preview {
+            color: #93c5fd !important;
+            font-size: 14px;
+        }
+
+        .project-tags-preview {
+            color: #c4b5fd !important;
+            font-size: 14px;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .project-actions button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+        }
+
+        .edit-project-button {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .delete-project-button {
+            background: #dc2626;
+            color: white;
+        }
+
+
+        /* =========================================
+           PROJECT FORM
+        ========================================= */
+
+        .project-form {
+            display: none;
+            margin-top: 15px;
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid #374151;
+            background: #111827;
+        }
+
+        .project-form.active {
+            display: grid;
+            gap: 14px;
+        }
+
+        .project-form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .project-form input,
+        .project-form textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px;
+            border-radius: 8px;
+            border: 1px solid #374151;
+            background: #0b1220;
+            color: white;
+            font: inherit;
+        }
+
+        .project-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .project-form-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .project-form-buttons button {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+        }
+
+        .save-project-button {
+            background: #16a34a;
+            color: white;
+        }
+
+        .cancel-project-button {
+            background: #374151;
+            color: white;
+        }
+
+
+        /* =========================================
+           TAG / TECHNOLOGY LINK EDITOR
+        ========================================= */
+
+        .tag-links-container {
+            margin-top: 10px;
+        }
+
+        .tag-link-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .tag-link-row input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px;
+            border-radius: 8px;
+            border: 1px solid #374151;
+            background: #0b1220;
+            color: white;
+            font: inherit;
+        }
+
+        .remove-tag-button {
+            background: #dc2626 !important;
+            color: white;
+            padding: 10px 14px !important;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .add-tag-button {
+            background: #2563eb !important;
+            color: white;
+            margin-top: 5px;
+        }
+
+        .tag-help {
+            margin-top: 6px;
+        }
+
+
+        /* =========================================
+           LIVE PROJECT PREVIEW
+        ========================================= */
+
+        .project-preview-section {
+            margin-top: 10px;
+        }
+
+        .project-preview-section h4 {
+            margin-bottom: 10px;
+        }
+
+        .project-live-preview {
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #374151;
+            background: #0b1220;
+        }
+
+        .project-live-preview h3 {
+            margin: 0 0 10px;
+            font-size: 20px;
+        }
+
+        .project-live-preview p {
+            margin: 0 0 15px;
+            color: #aab4c5;
+            line-height: 1.6;
+        }
+
+        .project-live-preview .preview-tag {
+            display: inline-block;
+            padding: 6px 10px;
+            margin: 4px 5px 0 0;
+            border-radius: 20px;
+            background: #1f2937;
+            color: #c4b5fd;
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+           PROFESSIONAL ANIMATIONS
+        ========================================= */
+
+        .admin-container {
+            animation: adminFadeIn 0.7s ease forwards;
+        }
+
+        @keyframes adminFadeIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .project-form.active {
+            animation: projectEditorOpen 0.35s ease forwards;
+        }
+
+        @keyframes projectEditorOpen {
+
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .project-item {
+            animation: projectItemAppear 0.4s ease both;
+        }
+
+        @keyframes projectItemAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .admin-form button,
+        .admin-button,
+        .project-actions button,
+        .project-form-buttons button {
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                opacity 0.25s ease;
+        }
+
+        .admin-form button:hover,
+        .admin-button:hover,
+        .project-actions button:hover,
+        .project-form-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .admin-form button:active,
+        .admin-button:active,
+        .project-actions button:active,
+        .project-form-buttons button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .admin-form input,
+        .admin-form textarea,
+        .project-form input,
+        .project-form textarea {
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                transform 0.2s ease;
+        }
+
+        .admin-form input:focus,
+        .admin-form textarea:focus,
+        .project-form input:focus,
+        .project-form textarea:focus {
+            outline: none;
+            border-color: var(--main-color);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+        }
+
+
+        /* =========================================
+           MOBILE RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px 10px;
+            }
+
+            .admin-container {
+                width: 100%;
+                margin: 10px auto;
+                padding: 18px 14px;
+                border-radius: 14px;
+            }
+
+            .admin-container h1 {
+                font-size: 26px;
+            }
+
+            .admin-container h2 {
+                font-size: 21px;
+            }
+
+            .admin-form {
+                gap: 14px;
+            }
+
+            .admin-form input,
+            .admin-form textarea,
+            .project-form input,
+            .project-form textarea {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .project-editor-header {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .project-editor-header h3 {
+                font-size: 20px;
+            }
+
+            .add-project-button {
+                width: 100%;
+                min-height: 46px;
+            }
+
+            .project-item {
+                padding: 15px;
+            }
+
+            .project-item h4 {
+                font-size: 17px;
+                line-height: 1.4;
+            }
+
+            .project-item p {
+                font-size: 13px;
+            }
+
+            .project-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .project-actions button {
+                width: 100%;
+                min-height: 44px;
+                padding: 10px;
+            }
+
+            .project-form {
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .tag-link-row {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .tag-link-row input {
+                min-height: 44px;
+                font-size: 16px;
+            }
+
+            .remove-tag-button {
+                width: 100%;
+                min-height: 44px;
+            }
+
+            .add-tag-button {
+                width: 100%;
+                min-height: 44px;
+            }
+
+            .project-live-preview {
+                padding: 15px;
+            }
+
+            .project-live-preview h3 {
+                font-size: 18px;
+            }
+
+            .project-form-buttons {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .project-form-buttons button {
+                width: 100%;
+                min-height: 46px;
+            }
+
+            #save-button {
+                width: 100%;
+                min-height: 48px;
+            }
+
+            .admin-button {
+                width: 100%;
+                min-height: 46px;
+            }
+
+        }
+
+
+        /* =========================================
+           SMALL PHONES
+        ========================================= */
+
+        @media (max-width: 380px) {
+
+            .admin-container {
+                padding: 15px 11px;
+            }
+
+            .admin-container h1 {
+                font-size: 23px;
+            }
+
+            .admin-container h2 {
+                font-size: 19px;
+            }
+
+            .admin-note {
+                font-size: 13px;
+            }
+
+            .project-actions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        /* =========================================
+           REDUCED MOTION
+        ========================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="admin-container">
+
+        <h1>
+            Hamza<span style="color:#a78bfa">.</span> Admin
+        </h1>
+
+        <p class="admin-note">
+            Manage your portfolio content from this dashboard.
+        </p>
+
+
+        <!-- =========================================
+             LOGIN
+        ========================================== -->
+
+        <section id="login-section">
+
+            <h2>Admin Login</h2>
+
+            <form id="login-form" class="admin-form">
+
+                <div>
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        required
+                        autocomplete="username"
+                        placeholder="Your admin email">
+
+                </div>
+
+
+                <div>
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div style="position: relative;">
+
+                        <input
+                            type="password"
+                            id="password"
+                            required
+                            autocomplete="current-password"
+                            placeholder="Your password"
+                            style="padding-right: 50px;">
+
+                        <button
+                            type="button"
+                            id="toggle-password"
+                            aria-label="Show password"
+                            aria-pressed="false"
+                            style="
+                                position: absolute;
+                                right: 10px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                                background: transparent;
+                                border: none;
+                                color: white;
+                                cursor: pointer;
+                                font-size: 20px;
+                                padding: 5px;
+                            ">
+                            👁
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit">
+                    Login
+                </button>
+
+            </form>
+
+
+            <p
+                id="login-message"
+                class="admin-status"
+                role="status">
+            </p>
+
+        </section>
+
+
+        <!-- =========================================
+             DASHBOARD
+        ========================================== -->
+
+        <section id="dashboard">
+
+            <h2>Portfolio Content</h2>
+
+            <p class="admin-note">
+                Edit your portfolio details below and click Save Portfolio.
+            </p>
+
+
+            <form
+                id="portfolio-form"
+                class="admin-form">
+
+
+                <!-- =====================================
+                     BASIC INFORMATION
+                ====================================== -->
+
+                <div>
+
+                    <label for="full-name">
+                        Full Name
+                    </label>
+
+                    <input
+                        id="full-name"
+                        required>
+
+                </div>
+
+
+                <div>
+
+                    <label for="typing-roles">
+                        Typing Roles
+                    </label>
+
+                    <textarea
+                        id="typing-roles"
+                        placeholder="College Student
+Python Developer
+Web Developer
+Future Software Engineer"></textarea>
+
+                    <p class="admin-note">
+                        Enter one role per line.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <label for="hero-description">
+                        Home Description
+                    </label>
+
+                    <textarea
+                        id="hero-description"></textarea>
+
+                </div>
+
+
+                <div>
+
+                    <label for="about-me">
+                        About Me
+                    </label>
+
+                    <textarea
+                        id="about-me"></textarea>
+
+                </div>
+
+
+                <div>
+
+                    <label for="skills">
+                        Skills
+                    </label>
+
+                    <textarea
+                        id="skills"
+                        placeholder="HTML
+CSS
+JavaScript
+Python"></textarea>
+
+                    <p class="admin-note">
+                        Enter one skill per line.
+                    </p>
+
+                </div>
+
+
+                <!-- =====================================
+                     PROJECT EDITOR
+                ====================================== -->
+
+                <div class="projects-editor">
+
+                    <div class="project-editor-header">
+
+                        <h3>
+                            Projects
+                        </h3>
+
+                        <button
+                            type="button"
+                            id="add-project-button"
+                            class="admin-form-button add-project-button">
+
+                            + Add Project
+
+                        </button>
+
+                    </div>
+
+
+                    <p class="admin-note">
+                        Add, edit or delete projects. Each project can have
+                        its own project link and individual code links for
+                        technologies.
+                    </p>
+
+
+                    <!-- PROJECT LIST -->
+
+                    <div
+                        id="projects-list"
+                        class="project-list">
+                    </div>
+
+
+                    <!-- =================================
+                         SINGLE PROJECT FORM
+                    ================================== -->
+
+                    <div
+                        id="project-editor"
+                        class="project-form">
+
+                        <h3 id="project-form-heading">
+                            Add New Project
+                        </h3>
+
+
+                        <!-- PROJECT TITLE -->
+
+                        <div>
+
+                            <label for="project-title">
+                                Project Title
+                            </label>
+
+                            <input
+                                id="project-title"
+                                type="text"
+                                placeholder="e.g. Face Attendance System">
+
+                        </div>
+
+
+                        <!-- PROJECT DESCRIPTION -->
+
+                        <div>
+
+                            <label for="project-description">
+                                Project Description
+                            </label>
+
+                            <textarea
+                                id="project-description"
+                                placeholder="Write a short description of your project..."></textarea>
+
+                        </div>
+
+
+                        <!-- PROJECT LINK -->
+
+                        <div>
+
+                            <label for="project-url">
+                                Project Link
+                            </label>
+
+                            <input
+                                id="project-url"
+                                type="url"
+                                placeholder="https://github.com/username/project">
+
+                            <p class="admin-note">
+                                When someone clicks the project card,
+                                this link will open in a new tab.
+                            </p>
+
+                        </div>
+
+
+                        <!-- TECHNOLOGY LINKS -->
+
+                        <div>
+
+                            <label>
+                                Technologies / Code Links
+                            </label>
+
+                            <p class="admin-note tag-help">
+                                Add each technology separately and provide
+                                the URL where its code can be viewed.
+                            </p>
+
+
+                            <div
+                                id="tag-links-container"
+                                class="tag-links-container">
+                            </div>
+
+
+                            <button
+                                type="button"
+                                id="add-tag-button"
+                                class="add-tag-button">
+
+                                + Add Technology
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- LIVE PROJECT PREVIEW -->
+
+                        <div class="project-preview-section">
+
+                            <h4>
+                                Live Preview
+                            </h4>
+
+                            <div
+                                id="project-live-preview"
+                                class="project-live-preview">
+
+                                <h3 id="preview-project-title">
+                                    Project Title
+                                </h3>
+
+                                <p id="preview-project-description">
+                                    Project description will appear here.
+                                </p>
+
+                                <div
+                                    id="preview-project-tags"
+                                    class="project-tags-preview">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PROJECT BUTTONS -->
+
+                        <div class="project-form-buttons">
+
+                            <button
+                                type="button"
+                                id="save-project-button"
+                                class="save-project-button">
+
+                                Save Project
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                id="cancel-project-button"
+                                class="cancel-project-button">
+
+                                Cancel
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     CONTACT
+                ====================================== -->
+
+                <div>
+
+                    <label for="contact-email">
+                        Contact Email
+                    </label>
+
+                    <input
+                        id="contact-email"
+                        type="email"
+                        placeholder="your@email.com">
+
+                </div>
+
+
+                <div>
+
+                    <label for="github">
+                        GitHub URL
+                    </label>
+
+                    <input
+                        id="github"
+                        type="url"
+                        placeholder="https://github.com/username">
+
+                </div>
+
+
+                <div>
+
+                    <label for="linkedin">
+                        LinkedIn URL
+                    </label>
+
+                    <input
+                        id="linkedin"
+                        type="url"
+                        placeholder="https://www.linkedin.com/in/username">
+
+                </div>
+
+
+                <!-- =====================================
+                     RESUME
+                ====================================== -->
+
+                <div>
+
+                    <label for="resume">
+                        Resume PDF Path
+                    </label>
+
+                    <input
+                        id="resume"
+                        type="text"
+                        placeholder="assets/Hamza_Ansari_Resume.pdf">
+
+                    <p class="admin-note">
+                        Enter the path of your resume PDF file.
+                    </p>
+
+                </div>
+
+
+                <!-- =====================================
+                     SAVE PORTFOLIO
+                ====================================== -->
+
+                <button
+                    type="submit"
+                    id="save-button">
+
+                    Save Portfolio
+
+                </button>
+
+            </form>
+
+
+            <!-- =====================================
+                 LOGOUT
+            ====================================== -->
+
+            <button
+                id="logout-button"
+                class="admin-button">
+
+                Logout
+
+            </button>
+
+
+            <p
+                id="save-status"
+                class="admin-status"
+                role="status">
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         FIREBASE / ADMIN JAVASCRIPT
+    ========================================== -->
+
+    <script
+        type="module"
+        src="admin.js">
+    </script>
+
+</body>
+
+</html>
